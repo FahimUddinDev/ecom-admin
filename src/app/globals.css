@@ -1,0 +1,576 @@
+@import "tailwindcss";
+
+/* ================================================================
+   ECOMMERCE ADMIN — GLOBAL DESIGN SYSTEM
+   Stack : Next.js 16 · Tailwind CSS v4 · Ant Design v6
+   Theme : Light / Dark via [data-theme="dark"] on <html>
+================================================================ */
+
+/* ----------------------------------------------------------------
+   1.  ACTIVE VARIANT (shared utility)
+---------------------------------------------------------------- */
+@custom-variant active {
+  .active &,
+  &.active {
+    @slot;
+  }
+}
+
+@custom-variant sm-sidebar {
+  .sm-sidebar &,
+  &.sm-sidebar {
+    @slot;
+  }
+}
+
+/* ================================================================
+   2.  TAILWIND v4 THEME — Design Tokens
+       All tokens here become Tailwind utilities automatically.
+       e.g.  bg-primary  |  text-headline  |  shadow-card
+================================================================ */
+@theme {
+  /* ── 2a. Primary Brand ───────────────────────────────────────── */
+  --color-primary: #4f46e5; /* indigo-600 – main brand   */
+  --color-primary-hover: #4338ca; /* indigo-700                */
+  --color-primary-light: #eef2ff; /* indigo-50  – tinted bg    */
+  --color-primary-dark: #3730a3; /* indigo-800                */
+
+  /* ── 2b. Secondary / Accent ──────────────────────────────────── */
+  --color-secondary: #06b6d4; /* cyan-500                  */
+  --color-secondary-hover: #0891b2; /* cyan-600                  */
+  --color-secondary-light: #ecfeff; /* cyan-50                   */
+
+  /* ── 2c. Status / Semantic ───────────────────────────────────── */
+  --color-success: #22c55e;
+  --color-success-light: #dcfce7;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-danger: #ef4444;
+  --color-danger-light: #fee2e2;
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+
+  /* ── 2d. LIGHT MODE — Backgrounds ───────────────────────────── */
+  --color-bg: #ffffff; /* page background           */
+  --color-bg-soft: #f9fafb; /* sidebar / section bg      */
+  --color-bg-subtle: #f3f4f6; /* card / panel bg           */
+  --color-bg-muted: #e5e7eb; /* table-stripe / dividers   */
+
+  /* ── 2e. LIGHT MODE — Foregrounds ───────────────────────────── */
+  --color-fg: #111827; /* default foreground        */
+  --color-fg-soft: #374151; /* slightly muted            */
+
+  /* ── 2f. LIGHT MODE — Text ───────────────────────────────────── */
+  --color-headline: #111827; /* H1 – H3                   */
+  --color-subtitle: #374151; /* H4 – H6                   */
+  --color-paragraph: #6b7280; /* body text                 */
+  --color-caption: #9ca3af; /* helper / meta text        */
+  --color-placeholder: #d1d5db;
+
+  /* ── 2g. LIGHT MODE — Borders ───────────────────────────────── */
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-border-focus: #4f46e5;
+
+  /* ── 2h. Neutral Grays (universal) ──────────────────────────── */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* ── 2i. Shadows ─────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 8px 32px 0 rgba(0, 0, 0, 0.16);
+  --shadow-light: 0 7px 35px 4px rgba(0, 0, 0, 0.04);
+
+  /* ── 2l. Z-Index ─────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ── 2m. Fonts ───────────────────────────────────────────────── */
+  --font-marcellus: "Marcellus", serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* ── 2n. Typography Scale (fluid clamp) ─────────────────────── */
+  /* Headings */
+  --text-h1: clamp(32px, 4vw, 56px);
+  --text-h2: clamp(28px, 3vw, 42px);
+  --text-h3: clamp(22px, 2.5vw, 32px);
+  --text-h4: clamp(18px, 2vw, 24px);
+  --text-h5: clamp(16px, 1.8vw, 20px);
+  --text-h6: clamp(14px, 1.5vw, 18px);
+  /* Body */
+  --text-lg: 18px;
+  --text-base: 16px;
+  --text-sm: 14px;
+  --text-xs: 12px;
+  --text-2xs: 10px;
+  /* Aliases kept for backwards compat */
+  --text-62: clamp(40px, 5vw, 62px);
+  --text-42: clamp(28px, 3vw, 42px);
+  --text-32: clamp(22px, 2.5vw, 32px);
+  --text-24: clamp(20px, 2vw, 24px);
+  --text-20: clamp(16px, 1.8vw, 20px);
+  --text-18: 18px;
+  --text-16: 16px;
+  --text-14: 14px;
+  --text-12: 12px;
+
+  /* Letter spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* Transitions */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ================================================================
+   3.  CSS CUSTOM PROPERTIES — Semantic Design Tokens
+       These are the "live" variables consumed by components.
+       Light-mode values are declared here; dark-mode overrides
+       sit under [data-theme="dark"] below.
+================================================================ */
+:root {
+  color-scheme: light;
+
+  /* Brand */
+  --ds-primary: var(--color-primary);
+  --ds-primary-hover: var(--color-primary-hover);
+  --ds-primary-light: var(--color-primary-light);
+  --ds-secondary: var(--color-secondary);
+  --ds-secondary-hover: var(--color-secondary-hover);
+
+  /* Status */
+  --ds-success: var(--color-success);
+  --ds-success-light: var(--color-success-light);
+  --ds-warning: var(--color-warning);
+  --ds-warning-light: var(--color-warning-light);
+  --ds-danger: var(--color-danger);
+  --ds-danger-light: var(--color-danger-light);
+  --ds-info: var(--color-info);
+  --ds-info-light: var(--color-info-light);
+
+  /* ── LIGHT: Backgrounds ─────────────────────────────────────── */
+  --ds-bg: #ffffff;
+  --ds-bg-soft: #f9fafb;
+  --ds-bg-subtle: #f3f4f6;
+  --ds-bg-muted: #e5e7eb;
+
+  /* ── LIGHT: Foregrounds ─────────────────────────────────────── */
+  --ds-fg: #111827;
+  --ds-fg-soft: #374151;
+  --ds-fg-muted: #6b7280;
+
+  /* ── LIGHT: Text ────────────────────────────────────────────── */
+  --ds-text-headline: #111827; /* H1–H3                       */
+  --ds-text-subtitle: #374151; /* H4–H6                       */
+  --ds-text-paragraph: #6b7280; /* <p>                         */
+  --ds-text-caption: #9ca3af; /* small / label               */
+  --ds-text-placeholder: #d1d5db;
+  --ds-text-inverse: #ffffff; /* text on dark bg             */
+  --ds-text-link: var(--color-primary);
+  --ds-text-link-hover: var(--color-primary-hover);
+
+  /* ── LIGHT: Borders ─────────────────────────────────────────── */
+  --ds-border: #e5e7eb;
+  --ds-border-strong: #d1d5db;
+  --ds-border-focus: var(--color-primary);
+
+  /* ── Shadows (same at both themes; override below if needed) ── */
+  --ds-shadow-xs: var(--shadow-xs);
+  --ds-shadow-sm: var(--shadow-sm);
+  --ds-shadow-md: var(--shadow-md);
+  --ds-shadow-lg: var(--shadow-lg);
+  --ds-shadow-xl: var(--shadow-xl);
+  --ds-shadow-card: var(--shadow-card);
+  --ds-shadow-modal: var(--shadow-modal);
+
+  /* ── Ant Design Token Overrides (Light) ─────────────────────── */
+  --ant-color-primary: var(--ds-primary);
+  --ant-color-primary-hover: var(--ds-primary-hover);
+  --ant-color-bg-base: var(--ds-bg);
+  --ant-color-bg-container: var(--ds-bg-soft);
+  --ant-color-bg-elevated: var(--ds-bg);
+  --ant-color-text: var(--ds-text-headline);
+  --ant-color-text-secondary: var(--ds-text-paragraph);
+  --ant-color-border: var(--ds-border);
+  --ant-color-border-secondary: var(--ds-bg-muted);
+  --ant-border-radius: var(--radius-lg);
+  --ant-font-family: var(--font-dm-sans);
+  --ant-color-success: var(--ds-success);
+  --ant-color-warning: var(--ds-warning);
+  --ant-color-error: var(--ds-danger);
+  --ant-color-info: var(--ds-info);
+}
+
+/* ================================================================
+   4.  DARK MODE OVERRIDES
+       Toggle via: document.documentElement.dataset.theme = 'dark'
+================================================================ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* ── DARK: Backgrounds ──────────────────────────────────────── */
+  --ds-bg: #0f1117; /* page background             */
+  --ds-bg-soft: #161b27; /* sidebar / section bg        */
+  --ds-bg-subtle: #1e2433; /* card / panel bg             */
+  --ds-bg-muted: #2a3348; /* table-stripe / dividers     */
+
+  /* ── DARK: Foregrounds ──────────────────────────────────────── */
+  --ds-fg: #f3f4f6;
+  --ds-fg-soft: #d1d5db;
+  --ds-fg-muted: #9ca3af;
+
+  /* ── DARK: Text ─────────────────────────────────────────────── */
+  --ds-text-headline: #f9fafb;
+  --ds-text-subtitle: #e5e7eb;
+  --ds-text-paragraph: #9ca3af;
+  --ds-text-caption: #6b7280;
+  --ds-text-placeholder: #374151;
+  --ds-text-inverse: #111827;
+
+  /* ── DARK: Borders ──────────────────────────────────────────── */
+  --ds-border: #2a3348;
+  --ds-border-strong: #374151;
+
+  /* ── DARK: Shadows (stronger for dark bg perception) ──────── */
+  --ds-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --ds-shadow-sm:
+    0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --ds-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --ds-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --ds-shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  --ds-shadow-modal: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+
+  /* ── Ant Design Token Overrides (Dark) ──────────────────────── */
+  --ant-color-bg-base: var(--ds-bg);
+  --ant-color-bg-container: var(--ds-bg-soft);
+  --ant-color-bg-elevated: var(--ds-bg-subtle);
+  --ant-color-text: var(--ds-text-headline);
+  --ant-color-text-secondary: var(--ds-text-paragraph);
+  --ant-color-border: var(--ds-border);
+  --ant-color-border-secondary: var(--ds-bg-muted);
+}
+
+/* ================================================================
+   5.  BASE RESETS & GLOBAL STYLES
+================================================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--ds-text-paragraph);
+    background-color: var(--ds-bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition:
+      background-color var(--duration-base) var(--ease-default),
+      color var(--duration-base) var(--ease-default);
+  }
+
+  /* ── Typography Defaults ─────────────────────────────────────── */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-dm-sans);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    color: var(--ds-text-headline);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+  }
+  h2 {
+    font-size: var(--text-h2);
+  }
+  h3 {
+    font-size: var(--text-h3);
+    color: var(--ds-text-headline);
+  }
+  h4 {
+    font-size: var(--text-h4);
+    color: var(--ds-text-subtitle);
+    font-weight: var(--weight-semibold);
+  }
+  h5 {
+    font-size: var(--text-h5);
+    color: var(--ds-text-subtitle);
+    font-weight: var(--weight-semibold);
+  }
+  h6 {
+    font-size: var(--text-h6);
+    color: var(--ds-text-subtitle);
+    font-weight: var(--weight-medium);
+  }
+
+  p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--ds-text-paragraph);
+  }
+
+  small,
+  .text-caption {
+    font-size: var(--text-xs);
+    color: var(--ds-text-caption);
+  }
+
+  a {
+    color: var(--ds-text-link);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+  a:hover {
+    color: var(--ds-text-link-hover);
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  /* ── Scrollbar ───────────────────────────────────────────────── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ds-bg-soft);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--ds-border-strong);
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ds-fg-muted);
+  }
+
+  /* ── Focus Visible ───────────────────────────────────────────── */
+  :focus-visible {
+    outline: 2px solid var(--ds-border-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Selection ───────────────────────────────────────────────── */
+  ::selection {
+    background-color: var(--ds-primary);
+    color: var(--ds-text-inverse);
+  }
+}
+
+/* ================================================================
+   6.  LAYOUT UTILITIES
+================================================================ */
+@layer base {
+  .container-x {
+    max-width: 1480px;
+    width: 100%;
+    padding-inline: var(--space-5);
+    margin-inline: auto;
+  }
+
+  .container-admin {
+    max-width: 1280px;
+    width: 100%;
+    padding-inline: var(--space-6);
+    margin-inline: auto;
+  }
+
+  /* Surfaces */
+  .surface {
+    background-color: var(--ds-bg);
+    color: var(--ds-fg);
+  }
+  .surface-soft {
+    background-color: var(--ds-bg-soft);
+    color: var(--ds-fg);
+  }
+  .surface-card {
+    background-color: var(--ds-bg-subtle);
+    color: var(--ds-fg);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--radius-xl);
+  }
+}
+
+/* ================================================================
+   7.  COMPONENT UTILITIES  (liquid button animation, etc.)
+================================================================ */
+@layer base {
+  /* Liquid fill button animation (kept from original) */
+  .liquid {
+    overflow: hidden;
+  }
+  .liquid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateY(101%);
+    transition: transform var(--duration-base) var(--ease-out);
+    z-index: 0;
+  }
+  .liquid:hover::after {
+    transform: translateY(0);
+  }
+  .liquid > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Admin-panel card */
+  .ds-card {
+    background-color: var(--ds-bg-subtle);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--ds-shadow-card);
+    padding: var(--space-6);
+    transition: box-shadow var(--duration-base) var(--ease-default);
+  }
+  .ds-card:hover {
+    box-shadow: var(--ds-shadow-md);
+  }
+
+  /* Divider */
+  .ds-divider {
+    border: none;
+    border-top: 1px solid var(--ds-border);
+    margin-block: var(--space-4);
+  }
+
+  /* Badge base */
+  .ds-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: 1.4;
+  }
+  .ds-badge-primary {
+    background: var(--ds-primary-light);
+    color: var(--ds-primary);
+  }
+  .ds-badge-success {
+    background: var(--ds-success-light);
+    color: var(--ds-success);
+  }
+  .ds-badge-warning {
+    background: var(--ds-warning-light);
+    color: var(--ds-warning);
+  }
+  .ds-badge-danger {
+    background: var(--ds-danger-light);
+    color: var(--ds-danger);
+  }
+  .ds-badge-info {
+    background: var(--ds-info-light);
+    color: var(--ds-info);
+  }
+}
+
+/* ================================================================
+   8.  KEYFRAME ANIMATIONS
+================================================================ */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================================
+   9.  ANT DESIGN GLOBAL OVERRIDES
+       Applied after Ant Design's own styles so DS tokens win.
+================================================================ */
+@layer base {
+  /* Table — stripe utility */
+  .ds-table-striped .ant-table-tbody > tr:nth-child(even) > td {
+    background-color: var(--ds-bg-soft);
+  }
+
+  /* Table — hover row */
+  .ds-table .ant-table-tbody > tr:hover > td {
+    background-color: var(--ds-primary-light) !important;
+  }
+
+  /* Tabs — active indicator colour */
+  .ds-tabs .ant-tabs-ink-bar {
+    background: var(--ds-primary);
+  }
+  .ds-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--ds-primary);
+  }
+}
