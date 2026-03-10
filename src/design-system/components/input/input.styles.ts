@@ -57,7 +57,7 @@ export const labelStyles = cva(
 
 /** Icon colours to match input state */
 export const stateIconColor: Record<string, string> = {
-  default: "text-[var(--ds-text-caption)]",
+  default: "text-[var(--ds-text-placeholder)]",
   error: "text-danger",
   success: "text-success",
   warning: "text-warning",

@@ -3,8 +3,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { apiSlice } from "./api/apiSlice";
 import { utilsReducer } from "./features/utils/utilsSlice";
-// import { apiSlice } from "./features/apiSlice/apiSlice";
 
 // Persist configuration
 const persistConfig = {
@@ -15,7 +15,7 @@ const persistConfig = {
 
 // Combine reducers
 const rootReducer = combineReducers({
-  //   [apiSlice.reducerPath]: apiSlice.reducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
   utils: utilsReducer,
 });
 

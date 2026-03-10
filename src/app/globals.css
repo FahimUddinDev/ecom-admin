@@ -224,7 +224,7 @@
   --ant-color-primary: var(--ds-primary);
   --ant-color-primary-hover: var(--ds-primary-hover);
   --ant-color-bg-base: var(--ds-bg);
-  --ant-color-bg-container: var(--ds-bg-soft);
+  --ant-color-bg-container: var(--ds-bg);
   --ant-color-bg-elevated: var(--ds-bg);
   --ant-color-text: var(--ds-text-headline);
   --ant-color-text-secondary: var(--ds-text-paragraph);
@@ -281,8 +281,8 @@
 
   /* ── Ant Design Token Overrides (Dark) ──────────────────────── */
   --ant-color-bg-base: var(--ds-bg);
-  --ant-color-bg-container: var(--ds-bg-soft);
-  --ant-color-bg-elevated: var(--ds-bg-subtle);
+  --ant-color-bg-container: var(--ds-bg);
+  --ant-color-bg-elevated: var(--ds-bg);
   --ant-color-text: var(--ds-text-headline);
   --ant-color-text-secondary: var(--ds-text-paragraph);
   --ant-color-border: var(--ds-border);
@@ -573,4 +573,116 @@
   .ds-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: var(--ds-primary);
   }
+
+  /* Select — transition & border-radius (ConfigProvider handles colors) */
+  .ds-select .ant-select-selector {
+    border-radius: 0.5rem !important;
+    transition: all var(--duration-base) var(--ease-default) !important;
+  }
+
+  /* Focus state ring */
+  .ds-select.ant-select-focused .ant-select-selector {
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2) !important;
+  }
+
+  /* Error state */
+  .ds-select.ant-select-status-error .ant-select-selector {
+    border-color: var(--ds-danger) !important;
+  }
+  .ds-select.ant-select-status-error.ant-select-focused .ant-select-selector {
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+  }
+
+  /* Disabled state — matches Input */
+  .ds-select.ant-select-disabled .ant-select-selector {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Size SM — h-8 (32px) */
+  .ds-select.ds-select-sm .ant-select-selector {
+    height: 2rem !important;
+    min-height: 2rem !important;
+    padding: 0 0.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 2rem !important;
+  }
+  .ds-select.ds-select-sm .ant-select-selection-search-input {
+    height: calc(2rem - 2px) !important;
+  }
+  .ds-select.ds-select-sm .ant-select-selection-item,
+  .ds-select.ds-select-sm .ant-select-selection-placeholder {
+    line-height: calc(2rem - 2px) !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Size MD — h-10 (40px) */
+  .ds-select.ds-select-md .ant-select-selector {
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    padding: 0 0.875rem !important;
+    font-size: 0.875rem !important;
+    line-height: 2.5rem !important;
+  }
+  .ds-select.ds-select-md .ant-select-selection-search-input {
+    height: calc(2.5rem - 2px) !important;
+  }
+  .ds-select.ds-select-md .ant-select-selection-item,
+  .ds-select.ds-select-md .ant-select-selection-placeholder {
+    line-height: calc(2.5rem - 2px) !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Size LG — h-12 (48px) */
+  .ds-select.ds-select-lg .ant-select-selector {
+    height: 3rem !important;
+    min-height: 3rem !important;
+    padding: 0 1rem !important;
+    font-size: 1rem !important;
+    line-height: 3rem !important;
+  }
+  .ds-select.ds-select-lg .ant-select-selection-search-input {
+    height: calc(3rem - 2px) !important;
+  }
+  .ds-select.ds-select-lg .ant-select-selection-item,
+  .ds-select.ds-select-lg .ant-select-selection-placeholder {
+    line-height: calc(3rem - 2px) !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* ================================================================
+   10. SELECT — DARK MODE DROPDOWN POPUP
+       The dropdown is portaled outside the component tree,
+       so dark-mode overrides must target it globally.
+================================================================ */
+[data-theme="dark"] .ant-select-dropdown {
+  background-color: var(--ds-bg-subtle) !important;
+  border: 1px solid var(--ds-border) !important;
+  box-shadow: var(--ds-shadow-lg) !important;
+}
+[data-theme="dark"] .ant-select-item {
+  color: var(--ds-text-headline) !important;
+}
+[data-theme="dark"]
+  .ant-select-item-option-active:not(.ant-select-item-option-selected) {
+  background-color: var(--ds-bg-muted) !important;
+}
+[data-theme="dark"]
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: rgba(79, 70, 229, 0.15) !important;
+  color: #a5b4fc !important;
+}
+[data-theme="dark"] .ant-select-item-empty {
+  color: var(--ds-text-caption) !important;
+}
+
+/* Dropdown popup — base */
+.ds-select-dropdown.ant-select-dropdown {
+  border-radius: 0.5rem !important;
+  box-shadow: var(--ds-shadow-md) !important;
+}
+
+:where(.css-dev-only-do-not-override-p45i5k).ant-select .ant-select-suffix {
+  color: var(--ds-text-placeholder) !important;
 }

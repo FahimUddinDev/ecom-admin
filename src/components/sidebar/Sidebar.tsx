@@ -415,7 +415,11 @@ export default function Sidebar() {
                   trigger={["hover"]}
                   items={item.subItems.map((s) => ({
                     key: s.href,
-                    label: s.label,
+                    label: (
+                      <Link href={s.href} className="block w-full">
+                        {s.label}
+                      </Link>
+                    ),
                   }))}
                   onSelect={(key) => {
                     router.push(key);
