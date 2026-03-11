@@ -1,12 +1,12 @@
 import apiRoutes from "@/appConfig/apiRoutes";
-import { apiSlice } from "@/redux/api/apiSlice";
+import { apiSlice } from "@/store/api/apiSlice";
 
 export const authApis = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     loginApi: builder.mutation({
       query: (data) => {
         return {
-          url: apiRoutes.login,
+          url: apiRoutes.LOGIN,
           method: "POST",
           body: data,
         };

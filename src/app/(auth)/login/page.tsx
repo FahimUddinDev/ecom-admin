@@ -1,21 +1,31 @@
 "use client";
 
 import { Button, Card, Input } from "@/design-system";
+import { useLoginApiMutation } from "@/store/features/auth/apiSlice";
+import { loginSchema } from "@/validators/validationSchema";
+import { validate } from "@/validators/validatorMiddleware";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isRemember, setIsRemember] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const handleLogin = (e: React.FormEvent) => {
+  const dispatch = useDispatch();
+  const [loginApi, { isLoading, error: apiError, isSuccess, data }] =
+    useLoginApiMutation();
+  console.log({ apiError });
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      window.location.href = "/";
-    }, 1500);
+    const info = await validate(loginSchema, { email, password, isRemember });
+    if (!info.success) {
+      setErrors(info.errors);
+      return;
+    }
+    loginApi({ email, password, isRemember });
   };
 
   return (
@@ -35,7 +45,7 @@ export default function LoginPage() {
         className="backdrop-blur-xl bg-white/5 border-white/10 p-8 shadow-2xl shadow-black/50"
         variant="flat"
       >
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form className="space-y-6">
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
@@ -44,6 +54,7 @@ export default function LoginPage() {
               <Input
                 type="email"
                 placeholder="admin@ecommrch.com"
+                errorText={errors.email}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[var(--ds-primary)] h-12"
@@ -66,6 +77,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="••••••••"
                 value={password}
+                errorText={errors.password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="bg-black/20 border-white/10 text-white placeholder:text-gray-600 focus:border-[var(--ds-primary)] h-12"
                 required
@@ -76,6 +88,8 @@ export default function LoginPage() {
           <div className="flex items-center gap-2 px-1">
             <input
               type="checkbox"
+              checked={isRemember}
+              onChange={(e) => setIsRemember(e.target.checked)}
               id="remember"
               className="rounded border-white/10 bg-black/20 accent-[var(--ds-primary)]"
             />
@@ -88,11 +102,12 @@ export default function LoginPage() {
           </div>
 
           <Button
-            type="submit"
+            type="button"
+            onClick={handleLogin}
             className="w-full h-12 text-sm font-bold bg-[var(--ds-primary)] hover:bg-[var(--ds-primary)]/90 text-white shadow-lg shadow-[var(--ds-primary)]/20 transition-all active:scale-[0.98]"
-            loading={loading}
+            loading={isLoading}
           >
-            {loading ? "Authenticating..." : "Sign In to Dashboard"}
+            {isLoading ? "Authenticating..." : "Sign In to Dashboard"}
           </Button>
         </form>
       </Card>
